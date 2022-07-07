@@ -24,8 +24,6 @@ public class HealthEventListener implements Listener {
         this.xToysHealthPlugin = xToysHealthPlugin;
     }
 
-
-
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityLoseHealth(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
@@ -58,7 +56,7 @@ public class HealthEventListener implements Listener {
                 Bukkit.getScheduler().runTaskLater(xToysHealthPlugin, new Runnable() {
                     @Override
                     public void run() {
-                        double regainAmount = event.getAmount();
+                        double regainAmount = Utils.round(event.getAmount(), 1);
                         double health = Utils.round(player.getHealth(), 1);
                         double maxHealth = Utils.getMaxHealth(player);
 
@@ -139,6 +137,5 @@ public class HealthEventListener implements Listener {
             }, DELAY);
         }
     }
-
 
 }

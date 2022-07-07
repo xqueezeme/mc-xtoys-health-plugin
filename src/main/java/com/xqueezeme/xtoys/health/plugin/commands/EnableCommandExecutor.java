@@ -22,6 +22,9 @@ public class EnableCommandExecutor implements CommandExecutor {
                     double maxHealth = Utils.getMaxHealth(player);
                     XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.SPAWN, name, Utils.round(player.getHealth(), 1), maxHealth);
                     XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(s, xToysEvent);
+                    commandSender.sendMessage("Enabled the XToys Health Plugin for " + name);
+                } else {
+                    commandSender.sendMessage("You are not registered.");
                 }
             }
         }

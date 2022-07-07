@@ -16,11 +16,14 @@ public class RegisterCommandExecutor implements CommandExecutor {
             if(strings.length > 0) {
                 Player player = commandSender.getServer().getPlayer(commandSender.getName());
                 if(player != null) {
-                    XToysHealthPlugin.configurationData.getPlayerMap().put(player.getUniqueId(), new PlayerConfiguration(strings[0]));
+                    final String webhookId = strings[0];
+                    XToysHealthPlugin.configurationData.getPlayerMap().put(player.getUniqueId(), new PlayerConfiguration(webhookId));
                     XToysHealthPlugin.configurationData.saveData(XToysHealthPlugin.CONFIGURATION_DATA_FILE_NAME);
                     double maxHealth = Utils.getMaxHealth(player);
                     XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.SPAWN, name, Utils.round(player.getHealth(), 1), maxHealth);
-                    XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(s, xToysEvent);
+                    XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(webhookId, xToysEvent);
+                    commandSender.sendMessage("Registered user " + commandSender.getName() + " with webhookId: " + webhookId);
+
                 }
             } else {
                 commandSender.sendMessage("Please provide the XToys webhookId");

@@ -9,8 +9,8 @@ commands:
     description: Removes your xtoys wekhookId
     usage: /xtoys-unregister
   xtoys-enable:
-    description: enables the plugin for a player
+    description: Enables the plugin for a player
     usage: /xtoys-enable
   xtoys-disable:
-    description: disables the plugin for a player
+    description: Disables the plugin for a player
     usage: /xtoys-disable

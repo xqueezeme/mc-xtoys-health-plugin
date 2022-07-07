@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class XToysHealthPlugin extends JavaPlugin {
-    public static final String CONFIGURATION_DATA_FILE_NAME = "xtoys-health.data";
+    public static final String CONFIGURATION_DATA_FILE_NAME = "xtoys-health-plugin.data";
     public static ConfigurationData configurationData = null;
     private final HealthEventListener HEALTH_EVENT_LISTENER = new HealthEventListener(this);
     public static XToysEventService X_TOYS_EVENT_SERVICE = null;

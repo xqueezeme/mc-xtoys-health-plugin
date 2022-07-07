@@ -23,6 +23,10 @@ public class UnregisterCommandExecutor implements CommandExecutor {
                     XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getUniqueId()).getWebhookId(), xToysEvent);
                     XToysHealthPlugin.configurationData.getPlayerMap().remove(player.getUniqueId());
                     XToysHealthPlugin.configurationData.saveData(XToysHealthPlugin.CONFIGURATION_DATA_FILE_NAME);
+                    commandSender.sendMessage("Unregistered user " + commandSender.getName());
+                } else {
+                    commandSender.sendMessage("You are not registered.");
+
                 }
             }
         }

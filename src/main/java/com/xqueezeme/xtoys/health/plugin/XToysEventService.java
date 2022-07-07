@@ -20,7 +20,10 @@ public class XToysEventService {
             HttpClient client = HttpClient.newHttpClient();
 
             XToysEvent.Type type = xToysEvent.getType();
-            final StringBuilder url = new StringBuilder("https://webhook.xtoys.app/?id=" + webhookId + "&action=" + type.name());
+            final StringBuilder url = new StringBuilder("https://webhook.xtoys.app/?id=" +
+                    URLEncoder.encode(webhookId, StandardCharsets.UTF_8.toString())
+                    + "&action="
+                    + URLEncoder.encode(type.name(), StandardCharsets.UTF_8.toString()));
 
             url.append("&health=").append(URLEncoder.encode(String.valueOf(xToysEvent.getHealth()), StandardCharsets.UTF_8.toString()));
             url.append("&maxhealth=").append(URLEncoder.encode(String.valueOf(xToysEvent.getMaxHealth()), StandardCharsets.UTF_8.toString()));
@@ -42,7 +45,6 @@ public class XToysEventService {
                     .thenAccept(code -> logger.info(code + " : " + url));
         } catch (Exception e) {
             e.printStackTrace();
-            logger.severe(e.getCause().getLocalizedMessage());
         }
     }
 }

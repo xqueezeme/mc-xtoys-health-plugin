@@ -8,3 +8,9 @@ Spigot plugin for minecraft 1.19 that sends the health updates for a player to a
  
  
  /xtoys-unregister: Removes your xtoys wekhookId
+
+
+ /xtoys-enable: Enables the XToys plugin for the player
+
+
+ /xtoys-disable: Disables the XToys plugin for the player

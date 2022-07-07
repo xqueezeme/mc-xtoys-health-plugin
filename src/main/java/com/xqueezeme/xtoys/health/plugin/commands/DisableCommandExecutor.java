@@ -12,9 +12,16 @@ public class DisableCommandExecutor implements CommandExecutor {
         String name = commandSender.getName();
         if(XToysHealthPlugin.configurationData != null && XToysHealthPlugin.configurationData.getPlayerMap() != null) {
             Player player = commandSender.getServer().getPlayer(name);
-            if(player != null && Utils.isPlayerEnabledXToys(player.getUniqueId())) {
+            if(player != null && XToysHealthPlugin.configurationData != null &&
+                    XToysHealthPlugin.configurationData.getPlayerMap() != null &&
+                    XToysHealthPlugin.configurationData.getPlayerMap().containsKey(player.getUniqueId())) {
                 XToysHealthPlugin.configurationData.getPlayerMap().get(player.getUniqueId()).setDisabled(true);
                 XToysHealthPlugin.configurationData.saveData(XToysHealthPlugin.CONFIGURATION_DATA_FILE_NAME);
+
+                commandSender.sendMessage("Disabled the XToys Health Plugin for " + name);
+            } else {
+                commandSender.sendMessage("You are not registered.");
+
             }
         }
         return true;

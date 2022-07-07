@@ -4,10 +4,10 @@ Spigot plugin for minecraft 1.19 that sends the health updates for a player to a
 
 # Commands:
 
- /xtoys-register <WEBHOOK_ID>: registers your xtoys wekhookId
+ /xtoys-register <WEBHOOK_ID>: registers your xtoys webhookId
  
  
- /xtoys-unregister: Removes your xtoys wekhookId
+ /xtoys-unregister: Removes your xtoys webhookId
 
 
  /xtoys-enable: Enables the XToys plugin for the player

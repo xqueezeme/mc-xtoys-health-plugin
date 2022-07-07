@@ -6,7 +6,7 @@
 
     <groupId>com.xqueezeme.xtoys</groupId>
     <artifactId>mc-xtoys-health-plugin</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <build>
         <plugins>
             <plugin>
@@ -18,6 +18,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>${project.artifactId}</finalName>
     </build>
 
     <repositories>

@@ -20,8 +20,9 @@ public class HealthEventListener implements Listener {
                     XToysHealthPlugin.configurationData.getPlayerMap() != null &&
                     XToysHealthPlugin.configurationData.getPlayerMap().containsKey(player.getName())) {
                 double damage = event.getFinalDamage();
+                double maxHealth = PlayerUtils.getMaxHealth(player);
                 double health = player.getHealth() - damage;
-                XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.DAMAGE, player.getName(),health);
+                XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.DAMAGE, player.getName(),health, maxHealth);
                 xToysEvent.setAmount(damage);
                 XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
             }
@@ -37,7 +38,9 @@ public class HealthEventListener implements Listener {
                     XToysHealthPlugin.configurationData.getPlayerMap().containsKey(player.getName())) {
                 double regainAmount = event.getAmount();
                 double health = player.getHealth() + regainAmount;
-                XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.HEAL, player.getName(), health);
+                double maxHealth = PlayerUtils.getMaxHealth(player);
+
+                XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.HEAL, player.getName(), health, maxHealth);
                 xToysEvent.setAmount(regainAmount);
                 XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
             }
@@ -51,7 +54,9 @@ public class HealthEventListener implements Listener {
                 XToysHealthPlugin.configurationData.getPlayerMap() != null &&
                 XToysHealthPlugin.configurationData.getPlayerMap().containsKey(player.getName())) {
             double health = player.getHealth();
-            XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.DEATH, player.getName(), health);
+            double maxHealth = PlayerUtils.getMaxHealth(player);
+
+            XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.DEATH, player.getName(), health, maxHealth);
             XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
 
         }
@@ -64,7 +69,9 @@ public class HealthEventListener implements Listener {
                         XToysHealthPlugin.configurationData.getPlayerMap() != null &&
                         XToysHealthPlugin.configurationData.getPlayerMap().containsKey(player.getName())) {
             double health = player.getHealth();
-            XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.SPAWN, player.getName(), health);
+            double maxHealth = PlayerUtils.getMaxHealth(player);
+
+            XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.SPAWN, player.getName(), health, maxHealth);
             XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
 
         }
@@ -77,7 +84,9 @@ public class HealthEventListener implements Listener {
                 XToysHealthPlugin.configurationData.getPlayerMap() != null &&
                 XToysHealthPlugin.configurationData.getPlayerMap().containsKey(player.getName())) {
             double health = player.getHealth();
-            XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.SPAWN, player.getName(), health);
+            double maxHealth = PlayerUtils.getMaxHealth(player);
+
+            XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.SPAWN, player.getName(), health, maxHealth);
             XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
         }
     }
@@ -89,8 +98,10 @@ public class HealthEventListener implements Listener {
                 XToysHealthPlugin.configurationData.getPlayerMap() != null &&
                 XToysHealthPlugin.configurationData.getPlayerMap().containsKey(player.getName())) {
             double health = player.getHealth();
-            XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.LEAVE, player.getName(), health);
+            double maxHealth = PlayerUtils.getMaxHealth(player);
+            XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.LEAVE, player.getName(), health, maxHealth);
             XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
         }
     }
+
 }

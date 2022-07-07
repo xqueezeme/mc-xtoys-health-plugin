@@ -25,8 +25,5 @@ public class XToysHealthPlugin extends JavaPlugin {
         this.getCommand("xtoys-unregister").setExecutor(null);
         HandlerList.unregisterAll(HEALTH_EVENT_LISTENER);
         configurationData.saveData(CONFIGURATION_DATA_FILE_NAME);
-
     }
-
-
 }

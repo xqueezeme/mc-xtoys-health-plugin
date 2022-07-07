@@ -4,12 +4,14 @@ public class XToysEvent {
     private Type type;
     private String playerName;
     private double health;
+    private double maxHealth;
     private double amount;
 
-    public XToysEvent(Type type, String playerName, double health) {
+    public XToysEvent(Type type, String playerName, double health, double maxHealth) {
         this.type = type;
         this.playerName = playerName;
         this.health = health;
+        this.maxHealth = maxHealth;
     }
 
 
@@ -38,10 +40,19 @@ public class XToysEvent {
         this.amount = amount;
     }
 
+    public double getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(double maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
     public static enum Type {
         DAMAGE,
         HEAL,
         DEATH,
-        LEAVE, SPAWN
+        LEAVE,
+        SPAWN
     }
 }

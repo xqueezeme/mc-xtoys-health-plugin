@@ -23,6 +23,7 @@ public class XToysEventService {
             final StringBuilder url = new StringBuilder("https://xtoys.app/webhook?id=" + webhookId + "&action=" + type.name());
 
             url.append("&health=").append(URLEncoder.encode(String.valueOf(xToysEvent.getHealth()), StandardCharsets.UTF_8.toString()));
+            url.append("&maxhealth=").append(URLEncoder.encode(String.valueOf(xToysEvent.getMaxHealth()), StandardCharsets.UTF_8.toString()));
             url.append("&player=").append(URLEncoder.encode(xToysEvent.getPlayerName(), StandardCharsets.UTF_8.toString()));
 
             switch (type) {

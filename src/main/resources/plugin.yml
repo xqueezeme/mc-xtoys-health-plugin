@@ -1,0 +1,12 @@
+name: xtoys-health-plugin
+version: 1.0
+main: com.xqueezem.xtoys.health.plugin.XToysHealthPlugin
+commands:
+  xtoys-register:
+    description: registers your xtoys wekhookId
+    usage: /xtoys-register <WEBHOOK_ID>
+    permission: xtoys-health-plugin.register
+  xtoys-unregister:
+    description: Removes your xtoys wekhookId
+    usage: /xtoys-unregister
+    permission: xtoys-health-plugin.register

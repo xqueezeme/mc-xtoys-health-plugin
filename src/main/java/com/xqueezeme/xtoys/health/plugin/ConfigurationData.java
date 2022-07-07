@@ -7,26 +7,26 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 public class ConfigurationData implements Serializable {
     private static transient final long serialVersionUID = -1681012206529286330L;
 
-    private Map<String, String> playerMap = new HashMap<String, String>();
+    private Map<UUID, PlayerConfiguration> playerMap = new HashMap<>();
 
     public ConfigurationData() {
     }
 
-    public Map<String, String> getPlayerMap() {
+    public Map<UUID, PlayerConfiguration> getPlayerMap() {
         return playerMap;
     }
 
-    public void setPlayerMap(Map<String, String> playerMap) {
+    public void setPlayerMap(Map<UUID, PlayerConfiguration> playerMap) {
         this.playerMap = playerMap;
     }
+
 
     public boolean saveData(String filePath) {
         try {

@@ -14,7 +14,7 @@ public class UnregisterCommandExecutor implements CommandExecutor {
                     XToysHealthPlugin.configurationData.getPlayerMap() != null &&
                     XToysHealthPlugin.configurationData.getPlayerMap().containsKey(player.getName())) {
                 double health = player.getHealth();
-                double maxHealth = PlayerUtils.getMaxHealth(player);
+                double maxHealth = Utils.getMaxHealth(player);
                 XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.LEAVE, player.getName(), health, maxHealth);
                 XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
                 XToysHealthPlugin.configurationData.getPlayerMap().remove(name);

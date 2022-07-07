@@ -48,8 +48,6 @@ public class ConfigurationData implements Serializable {
             in.close();
             return data;
         } catch (ClassNotFoundException | IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
             return new ConfigurationData();
         }
     }

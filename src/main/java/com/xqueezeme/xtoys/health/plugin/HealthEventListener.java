@@ -1,7 +1,9 @@
 package com.xqueezeme.xtoys.health.plugin;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
@@ -11,97 +13,138 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 public class HealthEventListener implements Listener {
+    public static final long DELAY = 1L;
+    private XToysHealthPlugin xToysHealthPlugin;
 
-    @EventHandler
+    public HealthEventListener(XToysHealthPlugin xToysHealthPlugin) {
+        this.xToysHealthPlugin = xToysHealthPlugin;
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityLoseHealth(EntityDamageEvent event) {
-        if(event.getEntity() instanceof Player) {
+        if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
-            if(XToysHealthPlugin.configurationData != null &&
+            if (!player.isDead() && XToysHealthPlugin.configurationData != null &&
                     XToysHealthPlugin.configurationData.getPlayerMap() != null &&
                     XToysHealthPlugin.configurationData.getPlayerMap().containsKey(player.getName())) {
-                double damage = event.getFinalDamage();
-                double maxHealth = PlayerUtils.getMaxHealth(player);
-                double health = player.getHealth() - damage;
-                XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.DAMAGE, player.getName(),health, maxHealth);
-                xToysEvent.setAmount(damage);
-                XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
+                Bukkit.getScheduler().runTaskLater(xToysHealthPlugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        double damage = event.getDamage();
+                        double maxHealth = Utils.getMaxHealth(player);
+                        double health = Utils.round(player.getHealth(), 1);
+                        if (health > 0) {
+                            XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.DAMAGE, player.getName(), health, maxHealth);
+                            xToysEvent.setAmount(damage);
+                            XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
+                        }
+                        event.setCancelled(false);
+                    }
+                }, DELAY);
+
             }
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityRegainHealth(EntityRegainHealthEvent event) {
-        if(event.getEntity() instanceof Player) {
+        if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
-            if(XToysHealthPlugin.configurationData != null &&
+            if (!player.isDead() && XToysHealthPlugin.configurationData != null &&
                     XToysHealthPlugin.configurationData.getPlayerMap() != null &&
                     XToysHealthPlugin.configurationData.getPlayerMap().containsKey(player.getName())) {
-                double regainAmount = event.getAmount();
-                double health = player.getHealth() + regainAmount;
-                double maxHealth = PlayerUtils.getMaxHealth(player);
+                Bukkit.getScheduler().runTaskLater(xToysHealthPlugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        double regainAmount = event.getAmount();
+                        double health = Utils.round(player.getHealth(), 1);
+                        double maxHealth = Utils.getMaxHealth(player);
 
-                XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.HEAL, player.getName(), health, maxHealth);
-                xToysEvent.setAmount(regainAmount);
-                XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
+                        XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.HEAL, player.getName(), health, maxHealth);
+                        xToysEvent.setAmount(regainAmount);
+                        XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
+                    }
+                }, DELAY);
             }
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDeath(PlayerDeathEvent playerDeathEvent) {
         Player player = playerDeathEvent.getEntity();
-        if(XToysHealthPlugin.configurationData != null &&
+        if (XToysHealthPlugin.configurationData != null &&
                 XToysHealthPlugin.configurationData.getPlayerMap() != null &&
                 XToysHealthPlugin.configurationData.getPlayerMap().containsKey(player.getName())) {
-            double health = player.getHealth();
-            double maxHealth = PlayerUtils.getMaxHealth(player);
+            Bukkit.getScheduler().runTaskLater(xToysHealthPlugin, new Runnable() {
+                @Override
+                public void run() {
+                    double health = Utils.round(player.getHealth(), 1);
+                    double maxHealth = Utils.getMaxHealth(player);
 
-            XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.DEATH, player.getName(), health, maxHealth);
-            XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
+                    XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.DEATH, player.getName(), health, maxHealth);
+                    XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
+                }
+            }, DELAY);
 
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerSpawn(PlayerRespawnEvent playerRespawnEvent) {
         Player player = playerRespawnEvent.getPlayer();
-        if(XToysHealthPlugin.configurationData != null &&
-                        XToysHealthPlugin.configurationData.getPlayerMap() != null &&
-                        XToysHealthPlugin.configurationData.getPlayerMap().containsKey(player.getName())) {
-            double health = player.getHealth();
-            double maxHealth = PlayerUtils.getMaxHealth(player);
+        if (XToysHealthPlugin.configurationData != null &&
+                XToysHealthPlugin.configurationData.getPlayerMap() != null &&
+                XToysHealthPlugin.configurationData.getPlayerMap().containsKey(player.getName())) {
+            Bukkit.getScheduler().runTaskLater(xToysHealthPlugin, new Runnable() {
+                @Override
+                public void run() {
+                    double health = Utils.round(player.getHealth(), 1);
+                    double maxHealth = Utils.getMaxHealth(player);
 
-            XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.SPAWN, player.getName(), health, maxHealth);
-            XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
-
+                    XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.SPAWN, player.getName(), health, maxHealth);
+                    XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
+                }
+            }, DELAY);
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent playerJoinEvent) {
         Player player = playerJoinEvent.getPlayer();
-        if(!player.isDead() && XToysHealthPlugin.configurationData != null &&
+        if (!player.isDead() && XToysHealthPlugin.configurationData != null &&
                 XToysHealthPlugin.configurationData.getPlayerMap() != null &&
                 XToysHealthPlugin.configurationData.getPlayerMap().containsKey(player.getName())) {
-            double health = player.getHealth();
-            double maxHealth = PlayerUtils.getMaxHealth(player);
+            Bukkit.getScheduler().runTaskLater(xToysHealthPlugin, new Runnable() {
+                @Override
+                public void run() {
+                    double health = Utils.round(player.getHealth(), 1);
+                    double maxHealth = Utils.getMaxHealth(player);
 
-            XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.SPAWN, player.getName(), health, maxHealth);
-            XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
+                    XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.SPAWN, player.getName(), health, maxHealth);
+                    XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
+                }
+            }, DELAY);
+
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerLeave(PlayerQuitEvent playerQuitEvent) {
         Player player = playerQuitEvent.getPlayer();
-        if(!player.isDead() && XToysHealthPlugin.configurationData != null &&
+        if (!player.isDead() && XToysHealthPlugin.configurationData != null &&
                 XToysHealthPlugin.configurationData.getPlayerMap() != null &&
                 XToysHealthPlugin.configurationData.getPlayerMap().containsKey(player.getName())) {
-            double health = player.getHealth();
-            double maxHealth = PlayerUtils.getMaxHealth(player);
-            XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.LEAVE, player.getName(), health, maxHealth);
-            XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
+            Bukkit.getScheduler().runTaskLater(xToysHealthPlugin, new Runnable() {
+                @Override
+                public void run() {
+                    double health = Utils.round(player.getHealth(), 1);
+                    double maxHealth = Utils.getMaxHealth(player);
+                    XToysEvent xToysEvent = new XToysEvent(XToysEvent.Type.LEAVE, player.getName(), health, maxHealth);
+                    XToysHealthPlugin.X_TOYS_EVENT_SERVICE.fire(XToysHealthPlugin.configurationData.getPlayerMap().get(player.getName()), xToysEvent);
+                }
+            }, DELAY);
         }
     }
+
 
 }

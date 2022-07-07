@@ -1,4 +1,4 @@
-package com.xqueezem.xtoys.health.plugin;
+package com.xqueezeme.xtoys.health.plugin;
 
 public class XToysEvent {
     private Type type;

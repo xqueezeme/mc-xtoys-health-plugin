@@ -1,4 +1,4 @@
-package com.xqueezem.xtoys.health.plugin;
+package com.xqueezeme.xtoys.health.plugin;
 
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;

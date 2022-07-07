@@ -1,4 +1,4 @@
-package com.xqueezem.xtoys.health.plugin;
+package com.xqueezeme.xtoys.health.plugin;
 
 import java.net.URI;
 import java.net.URLEncoder;

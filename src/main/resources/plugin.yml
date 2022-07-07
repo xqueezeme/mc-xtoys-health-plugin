@@ -1,6 +1,6 @@
 name: xtoys-health-plugin
 version: 1.0
-main: com.xqueezem.xtoys.health.plugin.XToysHealthPlugin
+main: com.xqueezeme.xtoys.health.plugin.XToysHealthPlugin
 commands:
   xtoys-register:
     description: registers your xtoys wekhookId

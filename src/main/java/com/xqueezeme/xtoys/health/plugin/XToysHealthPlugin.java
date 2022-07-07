@@ -1,4 +1,4 @@
-package com.xqueezem.xtoys.health.plugin;
+package com.xqueezeme.xtoys.health.plugin;
 
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
